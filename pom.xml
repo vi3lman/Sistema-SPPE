@@ -14,11 +14,15 @@
     </properties>
 
     <dependencies>
-        <!-- Se usa para armar/parsear los mensajes JSON entre cliente y servidor -->
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
             <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.1</version>
         </dependency>
     </dependencies>
 
@@ -36,8 +40,7 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <!-- TODO: actualizar cuando se agreguen las clases servidor en la proxima entrega -->
-                                    <mainClass></mainClass>
+                                    <mainClass>py.una.sppe.server.SppeServidorPagos</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
@@ -46,6 +49,11 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.1</version>
             </plugin>
         </plugins>
     </build>
