@@ -3,6 +3,7 @@ package py.una.sppe.server;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import py.una.bd.TransaccionDAO;
+import py.una.sppe.client.NotificarResultadoClient;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -10,12 +11,12 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
-
+import py.una.sppe.client.NotificarResultadoClient;
 public class ProcesarPagoHandler implements Runnable {
 
     private final Socket socketCliente;
     private final TransaccionDAO transaccionDAO = new TransaccionDAO();
-
+    private final NotificarResultadoClient notificarResultadoClient = new NotificarResultadoClient(); // NUEVO
     public ProcesarPagoHandler(Socket socketCliente) {
         this.socketCliente = socketCliente;
     }
@@ -80,7 +81,9 @@ public class ProcesarPagoHandler implements Runnable {
         } catch (Exception e) {
             System.err.println("[SPPE] No se pudo persistir la transaccion: " + e.getMessage());
         }
-
+        double montoFinal = montoProcesado;
+        new Thread(() -> notificarResultadoClient.notificar(idTransaccion, estado, montoFinal, fechaHora)).start();
         return respuesta;
     }
+   
 }

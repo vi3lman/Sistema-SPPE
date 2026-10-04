@@ -27,7 +27,7 @@ public class SolicitantePagoCliente {
         String idCliente = limpiar(scanner.nextLine());
         System.out.print("idMedioPago (ej: TARJETA_SIMBE): ");
         String idMedioPago = limpiar(scanner.nextLine());
-        System.out.print("monto (ej: 5000): ");
+        System.out.print("monto: ");
         double monto = Double.parseDouble(limpiar(scanner.nextLine()));
 
         JSONObject solicitud = new JSONObject();
